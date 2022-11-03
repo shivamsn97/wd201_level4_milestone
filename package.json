@@ -1,4 +1,21 @@
 {
+  "name": "wd201_level4_milestone",
+  "version": "1.0.0",
+  "description": "Milestone project for WD201 (level 4)",
+  "main": "todo.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shivamsn97/wd201_level4_milestone.git"
+  },
+  "author": "shivamsn97@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shivamsn97/wd201_level4_milestone/issues"
+  },
+  "homepage": "https://github.com/shivamsn97/wd201_level4_milestone#readme",
   "devDependencies": {
     "jest": "^29.2.2"
   }
