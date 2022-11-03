@@ -4,7 +4,8 @@
   "description": "Milestone project for WD201 (level 4)",
   "main": "todo.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/shivamsn97/wd201_level4_milestone#readme",
   "devDependencies": {
+    "husky": "^8.0.1",
     "jest": "^29.2.2"
   }
 }
