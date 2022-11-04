@@ -1,57 +1,44 @@
 /* eslint-disable no-undef */
-const { todoList, formattedDate } = require("../todo");
+const todoList = require("../todo");
 
 const { all, add, markAsComplete, overdue, dueToday, dueLater } = todoList();
 
+const today = new Date();
+const oneDay = 60 * 60 * 24 * 1000;
+const yesterday = new Date(today.getTime() - 1 * oneDay);
+const tomorrow = new Date(today.getTime() + 1 * oneDay);
+
 describe("TodoList Test Suite by shivamsn97@gmail.com", () => {
+  beforeAll(() => {
+    add({ title: "Pay rent", dueDate: yesterday.toLocaleDateString("en-CA") });
+    add({
+      title: "Service vehicle",
+      dueDate: today.toLocaleDateString("en-CA"),
+    });
+    add({ title: "File taxes", dueDate: tomorrow.toLocaleDateString("en-CA") });
+  });
+
   test("Should add new tests correctly.", () => {
-    expect(all.length).toBe(0);
-    add({ title: "Pay rent", dueDate: "2022-11-01", completed: false });
-    expect(all.length).toBe(1);
-    expect(all[0].title).toBe("Pay rent");
-    expect(all[0].dueDate).toBe("2022-11-01");
-    expect(all[0].completed).toBe(false);
+    expect(all.length).toBe(3);
   });
 
   test("Should mark a task as completed.", () => {
-    expect(all.length).toBe(1);
-    expect(all[0].completed).toBe(false);
     markAsComplete(0);
     expect(all[0].completed).toBe(true);
   });
 
   test("Should return overdue tasks.", () => {
-    // fake jest date to be 2022-07-22 for new Date
-    jest.useFakeTimers().setSystemTime(new Date("2022-07-22"));
-    expect(formattedDate(new Date())).toBe("2022-07-22");
-    expect(all.length).toBe(1);
-    expect(overdue().length).toBe(0);
-    add({
-      title: "Submit assignment",
-      dueDate: "2022-07-21",
-      completed: false,
-    });
-    add({ title: "File taxes", dueDate: "2022-07-22", completed: false });
     expect(overdue().length).toBe(1);
-    expect(overdue()[0].title).toBe("Submit assignment");
-    expect(overdue()[0].dueDate).toBe("2022-07-21");
+    expect(overdue()[0].title).toBe("Pay rent");
   });
 
   test("Should return tasks due today.", () => {
-    jest.useFakeTimers().setSystemTime(new Date("2022-07-22"));
-    expect(formattedDate(new Date())).toBe("2022-07-22");
-    expect(all.length).toBe(3);
     expect(dueToday().length).toBe(1);
-    expect(dueToday()[0].title).toBe("File taxes");
-    expect(dueToday()[0].dueDate).toBe("2022-07-22");
+    expect(dueToday()[0].title).toBe("Service vehicle");
   });
 
   test("Should return tasks due later.", () => {
-    jest.useFakeTimers().setSystemTime(new Date("2022-07-22"));
-    expect(formattedDate(new Date())).toBe("2022-07-22");
-    expect(all.length).toBe(3);
     expect(dueLater().length).toBe(1);
-    expect(dueLater()[0].title).toBe("Pay rent");
-    expect(dueLater()[0].dueDate).toBe("2022-11-01");
+    expect(dueLater()[0].title).toBe("File taxes");
   });
 });

@@ -25,26 +25,11 @@ const todoList = () => {
 
   const toDisplayableList = (list) => {
     // Format the To-Do list here, and return the output string as per the format given below.
-    //My Todo-list
-    //
-    //Overdue
-    //[ ] Submit assignment 2022-07-21
-    //
-    //
-    //Due Today
-    //[x] Pay rent
-    //[ ] Service vehicle
-    //
-    //
-    //Due Later
-    //[ ] File taxes 2022-07-23
-    //[ ] Pay electric bill 2022-07-23
-    // FILL YOUR CODE HERE
     let OUTPUT_STRING = "";
-    list.forEach((item) => {
-      OUTPUT_STRING += `[${item.completed ? "x" : " "}] ${item.title} ${
-        item.dueDate === formattedDate(new Date()) ? "" : item.dueDate
-      }\n`;
+    list.map((item, index) => {
+      OUTPUT_STRING += `[${item.completed ? "x" : " "}] ${index + 1}. ${
+        item.title
+      } ${item.dueDate === formattedDate(new Date()) ? "" : item.dueDate}\n`;
     });
     return OUTPUT_STRING.trim();
   };
@@ -64,7 +49,7 @@ const formattedDate = (d) => {
   return d.toISOString().split("T")[0];
 };
 
-module.exports = { todoList, formattedDate };
+module.exports = todoList;
 
 // ####################################### #
 // DO NOT CHANGE ANYTHING BELOW THIS LINE. #
