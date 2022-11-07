@@ -21,13 +21,16 @@ describe("TodoList Test Suite by shivamsn97@gmail.com", () => {
   });
 
   test("Should add new tests correctly.", () => {
-    add({ title: "Pay rent", dueDate: yesterday.toLocaleDateString("en-CA") });
+    const length = all.length;
     add({
-      title: "Service vehicle",
-      dueDate: today.toLocaleDateString("en-CA"),
+      title: "Pay rent",
+      dueDate: yesterday.toLocaleDateString("en-CA"),
+      completed: false,
     });
-    add({ title: "File taxes", dueDate: tomorrow.toLocaleDateString("en-CA") });
-    expect(all.length).toBe(3);
+    expect(all.length).toBe(length + 1);
+    expect(all[0].title).toBe("Pay rent");
+    expect(all[0].dueDate).toBe(yesterday.toLocaleDateString("en-CA"));
+    expect(all[0].completed).toBe(false);
   });
 
   test("Should mark a task as completed.", () => {
@@ -36,17 +39,32 @@ describe("TodoList Test Suite by shivamsn97@gmail.com", () => {
   });
 
   test("Should return overdue tasks.", () => {
-    expect(overdue().length).toBe(1);
-    expect(overdue()[0].title).toBe("Pay rent");
+    const overduelen = overdue().length;
+    add({
+      title: "Return book",
+      dueDate: yesterday.toLocaleDateString("en-CA"),
+    });
+    expect(overdue().length).toBe(overduelen + 1);
+    expect(overdue()[overduelen].title).toBe("Return book");
   });
 
   test("Should return tasks due today.", () => {
-    expect(dueToday().length).toBe(1);
-    expect(dueToday()[0].title).toBe("Service vehicle");
+    const duetodaylen = dueToday().length;
+    add({
+      title: "Service vehicle",
+      dueDate: today.toLocaleDateString("en-CA"),
+    });
+    expect(dueToday().length).toBe(duetodaylen + 1);
+    expect(dueToday()[duetodaylen].title).toBe("Service vehicle");
   });
 
   test("Should return tasks due later.", () => {
-    expect(dueLater().length).toBe(1);
-    expect(dueLater()[0].title).toBe("File taxes");
+    const duelaterlen = dueLater().length;
+    add({
+      title: "Buy groceries",
+      dueDate: tomorrow.toLocaleDateString("en-CA"),
+    });
+    expect(dueLater().length).toBe(duelaterlen + 1);
+    expect(dueLater()[duelaterlen].title).toBe("Buy groceries");
   });
 });
